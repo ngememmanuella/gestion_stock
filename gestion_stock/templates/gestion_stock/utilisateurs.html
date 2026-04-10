@@ -1,0 +1,248 @@
+{% extends 'gestion_stock/base.html' %}
+
+{% block title %}Utilisateurs — StockPro{% endblock %}
+{% block page_title %}Gestion des Utilisateurs{% endblock %}
+
+{% block sidebar_nav %}
+<a href="/admin-dashboard/" class="nav-item">
+    <span class="icon">⬡</span> Dashboard
+</a>
+<a href="/gestionnaire/" class="nav-item">
+    <span class="icon">📦</span> Produits
+</a>
+<a href="/mouvements/" class="nav-item">
+    <span class="icon">↕</span> Mouvements
+</a>
+<a href="/utilisateurs/" class="nav-item active">
+    <span class="icon">👤</span> Utilisateurs
+</a>
+<a href="/admin/" class="nav-item">
+    <span class="icon">⚙</span> Administration
+</a>
+{% endblock %}
+
+{% block extra_styles %}
+.grid { display: grid; grid-template-columns: 320px 1fr; gap: 24px; align-items: start; }
+
+.form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+}
+.form-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.field { margin-bottom: 16px; }
+.field label {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 7px;
+}
+.field input, .field select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.field input:focus, .field select:focus { border-color: var(--accent); }
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    margin-top: 8px;
+}
+.btn-submit:hover { opacity: 0.85; }
+
+.info-box {
+    background: rgba(240,192,64,0.07);
+    border: 1px solid rgba(240,192,64,0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.users-list { display: flex; flex-direction: column; gap: 12px; }
+.user-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.2s;
+}
+.user-card:hover { border-color: rgba(240,192,64,0.3); }
+.user-card.inactive { opacity: 0.5; }
+.avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(240,192,64,0.15);
+    border: 1px solid rgba(240,192,64,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+.user-info { flex: 1; }
+.user-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.user-meta { font-size: 12px; color: var(--muted); display: flex; gap: 12px; }
+.badge-role {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    background: rgba(240,192,64,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(240,192,64,0.2);
+}
+.badge-inactive {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    background: rgba(231,76,60,0.1);
+    color: #e74c3c;
+}
+.user-actions { display: flex; gap: 8px; }
+.btn {
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+.btn-toggle-on { background: rgba(46,204,113,0.1); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
+.btn-toggle-on:hover { background: rgba(46,204,113,0.2); }
+.btn-toggle-off { background: rgba(243,156,18,0.1); color: #f39c12; border: 1px solid rgba(243,156,18,0.3); }
+.btn-toggle-off:hover { background: rgba(243,156,18,0.2); }
+.btn-del { background: rgba(231,76,60,0.1); color: #e74c3c; border: 1px solid rgba(231,76,60,0.3); }
+.btn-del:hover { background: rgba(231,76,60,0.2); }
+
+.empty-state {
+    text-align: center;
+    padding: 48px;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 13px;
+}
+{% endblock %}
+
+{% block content %}
+<div class="grid">
+    <!-- Formulaire création -->
+    <div class="form-card">
+        <div class="form-title">Créer un utilisateur</div>
+
+        <div class="info-box">
+            ℹ️ Crée d'abord les groupes <strong>gestionnaire</strong> et <strong>secretaire</strong> dans <a href="/admin/auth/group/add/" style="color:var(--accent);">/admin/</a> si ce n'est pas encore fait.
+        </div>
+
+        <form method="post" action="/utilisateurs/creer/">
+            {% csrf_token %}
+            <div class="field">
+                <label>Nom d'utilisateur</label>
+                <input type="text" name="username" placeholder="ex: jean_dupont" required>
+            </div>
+            <div class="field">
+                <label>Mot de passe</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+            <div class="field">
+                <label>Rôle</label>
+                <select name="groupe">
+                    <option value="">-- Aucun rôle --</option>
+                    {% for g in groupes %}
+                    <option value="{{ g.id }}">{{ g.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="btn-submit" type="submit">Créer l'utilisateur →</button>
+        </form>
+    </div>
+
+    <!-- Liste utilisateurs -->
+    <div>
+        {% if utilisateurs %}
+        <div class="users-list">
+            {% for u in utilisateurs %}
+            <div class="user-card {% if not u.is_active %}inactive{% endif %}">
+                <div class="avatar">{{ u.username|slice:":1"|upper }}</div>
+                <div class="user-info">
+                    <div class="user-name">{{ u.username }}</div>
+                    <div class="user-meta">
+                        {% if u.groups.all %}
+                            {% for g in u.groups.all %}
+                            <span class="badge-role">{{ g.name }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span style="color:var(--muted);">Aucun rôle</span>
+                        {% endif %}
+                        {% if not u.is_active %}
+                            <span class="badge-inactive">Désactivé</span>
+                        {% endif %}
+                        <span>Créé le {{ u.date_joined|date:"d/m/Y" }}</span>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <form method="post" action="/utilisateurs/toggle/{{ u.id }}/">
+                        {% csrf_token %}
+                        {% if u.is_active %}
+                        <button class="btn btn-toggle-off" type="submit">⏸ Désactiver</button>
+                        {% else %}
+                        <button class="btn btn-toggle-on" type="submit">▶ Activer</button>
+                        {% endif %}
+                    </form>
+                    <form method="post" action="/utilisateurs/supprimer/{{ u.id }}/"
+                          onsubmit="return confirm('Supprimer {{ u.username }} ?')">
+                        {% csrf_token %}
+                        <button class="btn btn-del" type="submit">✕</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            Aucun utilisateur créé. Utilisez le formulaire pour en ajouter.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

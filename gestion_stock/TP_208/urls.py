@@ -12,10 +12,5 @@ urlpatterns = [
     path('gestionnaire/ajouter/', views.ajouter_produit, name='ajouter_produit'),
     path('gestionnaire/modifier/<int:pk>/', views.modifier_produit, name='modifier_produit'),
     path('gestionnaire/supprimer/<int:pk>/', views.supprimer_produit, name='supprimer_produit'),
-    path('mouvements/', views.mouvement_view, name='mouvements'),
     path('secretaire/', views.secretaire_view, name='secretaire'),
-    path('utilisateurs/', views.utilisateurs_view, name='utilisateurs'),
-    path('utilisateurs/creer/', views.creer_utilisateur, name='creer_utilisateur'),
-    path('utilisateurs/toggle/<int:pk>/', views.toggle_utilisateur, name='toggle_utilisateur'),
-    path('utilisateurs/supprimer/<int:pk>/', views.supprimer_utilisateur, name='supprimer_utilisateur'),
 ]
