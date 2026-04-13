@@ -27,6 +27,7 @@
             position: relative;
             overflow: hidden;
         }
+
         /* Grille décorative en fond */
         body::before {
             content: '';
@@ -38,16 +39,21 @@
             background-size: 50px 50px;
             pointer-events: none;
         }
+
         .login-wrap {
             width: 100%;
             max-width: 420px;
             padding: 20px;
             animation: fadeUp 0.5s ease;
+            position: relative;
+            z-index: 10;
         }
+
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
         }
+
         .login-header { text-align: center; margin-bottom: 40px; }
         .login-logo {
             font-family: 'Syne', sans-serif;
@@ -64,12 +70,15 @@
             letter-spacing: 2px;
             text-transform: uppercase;
         }
+
         .login-card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 36px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+
         .field { margin-bottom: 20px; }
         .field label {
             display: block;
@@ -92,6 +101,7 @@
             outline: none;
         }
         .field input:focus { border-color: var(--accent); }
+
         .btn-login {
             width: 100%;
             padding: 14px;
@@ -108,6 +118,7 @@
         }
         .btn-login:hover { opacity: 0.9; }
         .btn-login:active { transform: scale(0.98); }
+
         .alert-error {
             background: rgba(231,76,60,0.1);
             border: 1px solid rgba(231,76,60,0.3);
@@ -118,6 +129,7 @@
             font-size: 13px;
             margin-bottom: 20px;
         }
+
         .login-footer {
             text-align: center;
             margin-top: 20px;
@@ -132,24 +144,29 @@
             <div class="login-logo">Stock<em>Pro</em></div>
             <div class="login-sub">Système de gestion des stocks</div>
         </div>
+
         <div class="login-card">
-            {% for message in messages %}
-                <div class="alert-error">{{ message }}</div>
-            {% endfor %}
-            <form method="post">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert-error">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST">
                 {% csrf_token %}
                 <div class="field">
-                    <label>Nom d'utilisateur</label>
-                    <input type="text" name="username" placeholder="ex: admin" required autofocus>
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" name="username" placeholder="ex: emmanuella" required autofocus>
                 </div>
                 <div class="field">
-                    <label>Mot de passe</label>
-                    <input type="password" name="password" placeholder="••••••••" required>
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
                 </div>
                 <button class="btn-login" type="submit">Se connecter →</button>
             </form>
         </div>
-        <div class="login-footer">StockPro v1.0 · TP_208</div>
+
+        <div class="login-footer">StockPro v1.0 · Université de Yaoundé 1</div>
     </div>
 </body>
 </html>

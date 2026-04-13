@@ -19,127 +19,128 @@
 {% endblock %}
 
 {% block extra_styles %}
-.grid { display: grid; grid-template-columns: 360px 1fr; gap: 24px; align-items: start; }
+<style>
+    /* Grid Layout: Left for Form, Right for History */
+    .grid { display: grid; grid-template-columns: 360px 1fr; gap: 24px; align-items: start; }
 
-.form-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 24px;
-}
-.form-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: var(--text);
-}
-.field { margin-bottom: 16px; }
-.field label {
-    display: block;
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 7px;
-}
-.field select, .field input, .field textarea {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px 12px;
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-}
-.field select:focus, .field input:focus, .field textarea:focus { border-color: var(--accent); }
-.field textarea { resize: vertical; min-height: 70px; }
+    .form-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 24px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .form-title {
+        font-family: 'Syne', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--accent);
+    }
+    .field { margin-bottom: 16px; }
+    .field label {
+        display: block;
+        font-size: 11px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 7px;
+    }
+    .field select, .field input, .field textarea {
+        width: 100%;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 10px 12px;
+        color: var(--text);
+        font-family: 'DM Mono', monospace;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    .field select:focus, .field input:focus, .field textarea:focus { border-color: var(--accent); }
+    .field textarea { resize: vertical; min-height: 70px; }
 
-.type-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.type-btn {
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--muted);
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-}
-.type-btn.entree.selected { background: rgba(46,204,113,0.15); border-color: #2ecc71; color: #2ecc71; }
-.type-btn.sortie.selected { background: rgba(231,76,60,0.15); border-color: #e74c3c; color: #e74c3c; }
-.type-btn:hover { border-color: var(--accent); color: var(--accent); }
+    /* Type Toggle (Entrée/Sortie) */
+    .type-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .type-btn {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--muted);
+        font-family: 'Syne', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+    }
+    .type-btn.entree.selected { background: rgba(46,204,113,0.15); border-color: #2ecc71; color: #2ecc71; }
+    .type-btn.sortie.selected { background: rgba(231,76,60,0.15); border-color: #e74c3c; color: #e74c3c; }
+    .type-btn:hover { border-color: var(--accent); }
 
-.btn-submit {
-    width: 100%;
-    padding: 12px;
-    background: var(--accent);
-    color: var(--bg);
-    border: none;
-    border-radius: 6px;
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    margin-top: 8px;
-}
-.btn-submit:hover { opacity: 0.85; }
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background: var(--accent);
+        color: var(--bg);
+        border: none;
+        border-radius: 6px;
+        font-family: 'Syne', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        margin-top: 8px;
+    }
+    .btn-submit:hover { opacity: 0.85; }
 
-.table-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-}
-.table-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-}
-table { width: 100%; border-collapse: collapse; }
-thead th {
-    padding: 12px 16px;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--muted);
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    background: rgba(255,255,255,0.02);
-}
-tbody tr { transition: background 0.15s; }
-tbody tr:hover { background: rgba(240,192,64,0.04); }
-tbody td {
-    padding: 12px 16px;
-    font-size: 12px;
-    border-bottom: 1px solid rgba(30,30,46,0.5);
-}
-tbody tr:last-child td { border-bottom: none; }
-
-.badge-entree {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 3px 10px; border-radius: 20px; font-size: 11px;
-    background: rgba(46,204,113,0.15); color: #2ecc71;
-}
-.badge-sortie {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 3px 10px; border-radius: 20px; font-size: 11px;
-    background: rgba(231,76,60,0.15); color: #e74c3c;
-}
+    /* History Table */
+    .table-wrap {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .table-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        font-family: 'Syne', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        background: rgba(255,255,255,0.02);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+        padding: 12px 16px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--muted);
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+    }
+    tbody td {
+        padding: 12px 16px;
+        font-size: 12px;
+        border-bottom: 1px solid rgba(30,30,46,0.5);
+    }
+    .badge-entree {
+        display: inline-flex; align-items: center; gap: 4px;
+        padding: 3px 10px; border-radius: 20px; font-size: 11px;
+        background: rgba(46,204,113,0.15); color: #2ecc71; font-weight: 600;
+    }
+    .badge-sortie {
+        display: inline-flex; align-items: center; gap: 4px;
+        padding: 3px 10px; border-radius: 20px; font-size: 11px;
+        background: rgba(231,76,60,0.15); color: #e74c3c; font-weight: 600;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 <div class="grid">
-    <!-- Formulaire -->
     <div class="form-card">
         <div class="form-title">Enregistrer un mouvement</div>
         <form method="post">
@@ -147,7 +148,7 @@ tbody tr:last-child td { border-bottom: none; }
             <input type="hidden" name="type_mouvement" id="type_input" value="entree">
 
             <div class="field">
-                <label>Type de mouvement</label>
+                <label>Nature du mouvement</label>
                 <div class="type-toggle">
                     <button type="button" class="type-btn entree selected" onclick="setType('entree')">
                         ↑ Entrée
@@ -159,65 +160,62 @@ tbody tr:last-child td { border-bottom: none; }
             </div>
 
             <div class="field">
-                <label>Produit</label>
+                <label>Produit Concerné</label>
                 <select name="produit" required>
-                    <option value="">-- Choisir un produit --</option>
+                    <option value="">-- Sélectionner un produit --</option>
                     {% for p in produits %}
-                    <option value="{{ p.id }}">{{ p.nom }} (stock: {{ p.quantite }})</option>
+                    <option value="{{ p.id }}">{{ p.nom }} (Actuel: {{ p.quantite }})</option>
                     {% endfor %}
                 </select>
             </div>
 
             <div class="field">
                 <label>Quantité</label>
-                <input type="number" name="quantite" min="1" placeholder="ex: 50" required>
+                <input type="number" name="quantite" min="1" placeholder="Quantité à mouvementer" required>
             </div>
 
             <div class="field">
-                <label>Note (optionnel)</label>
-                <textarea name="note" placeholder="ex: Livraison fournisseur ABC..."></textarea>
+                <label>Commentaire / Note</label>
+                <textarea name="note" placeholder="Justification (fournisseur, vente, casse...)"></textarea>
             </div>
 
-            <button class="btn-submit" type="submit">Enregistrer →</button>
+            <button class="btn-submit" type="submit">Valider le mouvement →</button>
         </form>
     </div>
 
-    <!-- Historique -->
     <div class="table-wrap">
-        <div class="table-header">Historique des mouvements</div>
+        <div class="table-header">Journal des activités récentes</div>
         <table>
             <thead>
                 <tr>
-                    <th>Date</th>
+                    <th>Date & Heure</th>
                     <th>Produit</th>
                     <th>Type</th>
-                    <th>Quantité</th>
-                    <th>Par</th>
-                    <th>Note</th>
+                    <th>Qté</th>
+                    <th>Auteur</th>
+                    <th>Notes</th>
                 </tr>
             </thead>
             <tbody>
                 {% for m in mouvements %}
                 <tr>
                     <td style="color: var(--muted);">{{ m.date|date:"d/m/Y H:i" }}</td>
-                    <td style="font-weight: 500;">{{ m.produit.nom }}</td>
+                    <td style="font-weight: 600;">{{ m.produit.nom }}</td>
                     <td>
                         {% if m.type_mouvement == 'entree' %}
-                            <span class="badge-entree">↑ Entrée</span>
+                            <span class="badge-entree">↑ Arrivage</span>
                         {% else %}
                             <span class="badge-sortie">↓ Sortie</span>
                         {% endif %}
                     </td>
-                    <td style="font-weight: 500;">{{ m.quantite }}</td>
-                    <td style="color: var(--muted);">{{ m.utilisateur.username|default:"—" }}</td>
-                    <td style="color: var(--muted);">{{ m.note|default:"—" }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" style="text-align:center; color: var(--muted); padding: 48px;">
-                        Aucun mouvement enregistré
+                    <td style="font-weight: 600; color: var(--accent);">{{ m.quantite }}</td>
+                    <td style="color: var(--muted);">{{ m.utilisateur.username|default:"Système" }}</td>
+                    <td style="font-style: italic; color: var(--muted); font-size: 11px;">
+                        {{ m.note|truncatechars:30|default:"—" }}
                     </td>
                 </tr>
+                {% empty %}
+                <tr><td colspan="6" style="text-align:center; padding: 48px; color: var(--muted);">Aucun mouvement à afficher.</td></tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -225,6 +223,7 @@ tbody tr:last-child td { border-bottom: none; }
 </div>
 
 <script>
+// Logic to handle the visual switch between Entrée and Sortie
 function setType(type) {
     document.getElementById('type_input').value = type;
     document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
